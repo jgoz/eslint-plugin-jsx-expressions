@@ -1,4 +1,5 @@
-import { RuleTester } from "@typescript-eslint/rule-tester"; 
+import * as tsParser from "@typescript-eslint/parser";
+import { RuleTester } from "@typescript-eslint/rule-tester";
 import rule from "../../../lib/rules/strict-logical-expressions";
 import { getFixturesRootDir } from "../util";
 
@@ -7,50 +8,60 @@ import { getFixturesRootDir } from "../util";
 //------------------------------------------------------------------------------
 
 const ruleTester = new RuleTester({
-  parserOptions: {
+  languageOptions: {
     ecmaVersion: 6,
     sourceType: "module",
-    ecmaFeatures: {},
-    tsconfigRootDir: getFixturesRootDir(),
-    project: "./tsconfig.json",
+    parser: tsParser,
+    parserOptions: {
+      ecmaFeatures: {},
+      tsconfigRootDir: getFixturesRootDir(),
+      project: "./tsconfig.json",
+    },
   },
-  parser: "@typescript-eslint/parser",
 });
 
 ruleTester.run("strict-logical-expressions", rule, {
   valid: [
     {
       code: ['const str = "Foo";', "<App>{str && <Foo/>}</App>"].join("\n"),
-      parserOptions: {
-        ecmaFeatures: {
-          jsx: true,
+      languageOptions: {
+        parserOptions: {
+          ecmaFeatures: {
+            jsx: true,
+          },
         },
       },
       filename: "react.tsx",
     },
     {
       code: ["const num = 100;", "<App>{num && <Foo />}</App>"].join("\n"),
-      parserOptions: {
-        ecmaFeatures: {
-          jsx: true,
+      languageOptions: {
+        parserOptions: {
+          ecmaFeatures: {
+            jsx: true,
+          },
         },
       },
       filename: "react.tsx",
     },
     {
       code: ['let str = "Foo";', "<App>{!!str && <Foo />}</App>"].join("\n"),
-      parserOptions: {
-        ecmaFeatures: {
-          jsx: true,
+      languageOptions: {
+        parserOptions: {
+          ecmaFeatures: {
+            jsx: true,
+          },
         },
       },
       filename: "react.tsx",
     },
     {
       code: ["let num = 100;", "<App>{!!num && <Foo />}</App>"].join("\n"),
-      parserOptions: {
-        ecmaFeatures: {
-          jsx: true,
+      languageOptions: {
+        parserOptions: {
+          ecmaFeatures: {
+            jsx: true,
+          },
         },
       },
       filename: "react.tsx",
@@ -59,9 +70,11 @@ ruleTester.run("strict-logical-expressions", rule, {
       code: ["let num = 100;", "<App>{Boolean(num) && <Foo />}</App>"].join(
         "\n"
       ),
-      parserOptions: {
-        ecmaFeatures: {
-          jsx: true,
+      languageOptions: {
+        parserOptions: {
+          ecmaFeatures: {
+            jsx: true,
+          },
         },
       },
       filename: "react.tsx",
@@ -70,18 +83,22 @@ ruleTester.run("strict-logical-expressions", rule, {
       code: ['let str = "Foo";', "<App>{Boolean(str) && <Foo />}</App>"].join(
         "\n"
       ),
-      parserOptions: {
-        ecmaFeatures: {
-          jsx: true,
+      languageOptions: {
+        parserOptions: {
+          ecmaFeatures: {
+            jsx: true,
+          },
         },
       },
       filename: "react.tsx",
     },
     {
       code: ["let num = 100;", "<App>{num && <Foo />}</App>"].join("\n"),
-      parserOptions: {
-        ecmaFeatures: {
-          jsx: true,
+      languageOptions: {
+        parserOptions: {
+          ecmaFeatures: {
+            jsx: true,
+          },
         },
       },
       options: [{ allowNumber: true }],
@@ -89,9 +106,11 @@ ruleTester.run("strict-logical-expressions", rule, {
     },
     {
       code: ['let str = "foo";', "<App>{str && <Foo />}</App>"].join("\n"),
-      parserOptions: {
-        ecmaFeatures: {
-          jsx: true,
+      languageOptions: {
+        parserOptions: {
+          ecmaFeatures: {
+            jsx: true,
+          },
         },
       },
       options: [{ allowString: true }],
@@ -103,9 +122,11 @@ ruleTester.run("strict-logical-expressions", rule, {
         "const obj: { foo: Bar } = { foo: 'bar' };",
         "<App>{obj?.foo && <Foo/>}</App>",
       ].join("\n"),
-      parserOptions: {
-        ecmaFeatures: {
-          jsx: true,
+      languageOptions: {
+        parserOptions: {
+          ecmaFeatures: {
+            jsx: true,
+          },
         },
       },
       filename: "react.tsx",
@@ -117,9 +138,11 @@ ruleTester.run("strict-logical-expressions", rule, {
         "\n"
       ),
       errors: [{ messageId: "conditionErrorFalseyNumber" }],
-      parserOptions: {
-        ecmaFeatures: {
-          jsx: true,
+      languageOptions: {
+        parserOptions: {
+          ecmaFeatures: {
+            jsx: true,
+          },
         },
       },
       output: [
@@ -134,9 +157,11 @@ ruleTester.run("strict-logical-expressions", rule, {
         "<App>{obj.foo.bar && <Foo/>}</App>",
       ].join("\n"),
       errors: [{ messageId: "conditionErrorFalseyString" }],
-      parserOptions: {
-        ecmaFeatures: {
-          jsx: true,
+      languageOptions: {
+        parserOptions: {
+          ecmaFeatures: {
+            jsx: true,
+          },
         },
       },
       output: [
@@ -152,9 +177,11 @@ ruleTester.run("strict-logical-expressions", rule, {
         "<App>{first && second.bar && <Foo/>}</App>",
       ].join("\n"),
       errors: [{ messageId: "conditionErrorFalseyNumber" }],
-      parserOptions: {
-        ecmaFeatures: {
-          jsx: true,
+      languageOptions: {
+        parserOptions: {
+          ecmaFeatures: {
+            jsx: true,
+          },
         },
       },
       output: [
@@ -167,9 +194,11 @@ ruleTester.run("strict-logical-expressions", rule, {
     {
       code: ["let num = 100;", "<App>{num && <Foo/>}</App>"].join("\n"),
       errors: [{ messageId: "conditionErrorFalseyNumber" }],
-      parserOptions: {
-        ecmaFeatures: {
-          jsx: true,
+      languageOptions: {
+        parserOptions: {
+          ecmaFeatures: {
+            jsx: true,
+          },
         },
       },
       output: ["let num = 100;", "<App>{!!num && <Foo/>}</App>"].join("\n"),
@@ -178,9 +207,11 @@ ruleTester.run("strict-logical-expressions", rule, {
     {
       code: ['let str = "foo";', "<App>{str && <Foo/>}</App>"].join("\n"),
       errors: [{ messageId: "conditionErrorFalseyString" }],
-      parserOptions: {
-        ecmaFeatures: {
-          jsx: true,
+      languageOptions: {
+        parserOptions: {
+          ecmaFeatures: {
+            jsx: true,
+          },
         },
       },
       output: ['let str = "foo";', "<App>{!!str && <Foo/>}</App>"].join("\n"),
@@ -189,9 +220,11 @@ ruleTester.run("strict-logical-expressions", rule, {
     {
       code: ["const num = 0;", "<App>{num && <Foo/>}</App>"].join("\n"),
       errors: [{ messageId: "conditionErrorFalseyNumber" }],
-      parserOptions: {
-        ecmaFeatures: {
-          jsx: true,
+      languageOptions: {
+        parserOptions: {
+          ecmaFeatures: {
+            jsx: true,
+          },
         },
       },
       output: ["const num = 0;", "<App>{!!num && <Foo/>}</App>"].join("\n"),
@@ -200,9 +233,11 @@ ruleTester.run("strict-logical-expressions", rule, {
     {
       code: ['const str = "";', "<App>{str && <Foo/>}</App>"].join("\n"),
       errors: [{ messageId: "conditionErrorFalseyString" }],
-      parserOptions: {
-        ecmaFeatures: {
-          jsx: true,
+      languageOptions: {
+        parserOptions: {
+          ecmaFeatures: {
+            jsx: true,
+          },
         },
       },
       output: ['const str = "";', "<App>{!!str && <Foo/>}</App>"].join("\n"),
@@ -214,9 +249,11 @@ ruleTester.run("strict-logical-expressions", rule, {
         "<App>{thisOrThat && <Foo/>}</App>",
       ].join("\n"),
       errors: [{ messageId: "conditionErrorFalseyString" }],
-      parserOptions: {
-        ecmaFeatures: {
-          jsx: true,
+      languageOptions: {
+        parserOptions: {
+          ecmaFeatures: {
+            jsx: true,
+          },
         },
       },
       output: [
@@ -231,9 +268,11 @@ ruleTester.run("strict-logical-expressions", rule, {
         "<App>{thisOrThat && <Foo/>}</App>",
       ].join("\n"),
       errors: [{ messageId: "conditionErrorFalseyNumber" }],
-      parserOptions: {
-        ecmaFeatures: {
-          jsx: true,
+      languageOptions: {
+        parserOptions: {
+          ecmaFeatures: {
+            jsx: true,
+          },
         },
       },
       output: [
@@ -249,9 +288,11 @@ ruleTester.run("strict-logical-expressions", rule, {
         "<App>{first && second && <Foo/>}</App>",
       ].join("\n"),
       errors: [{ messageId: "conditionErrorFalseyString" }],
-      parserOptions: {
-        ecmaFeatures: {
-          jsx: true,
+      languageOptions: {
+        parserOptions: {
+          ecmaFeatures: {
+            jsx: true,
+          },
         },
       },
       output: [
@@ -268,9 +309,11 @@ ruleTester.run("strict-logical-expressions", rule, {
         "<App>{first && second?.foo && <Foo/>}</App>",
       ].join("\n"),
       errors: [{ messageId: "conditionErrorFalseyString" }],
-      parserOptions: {
-        ecmaFeatures: {
-          jsx: true,
+      languageOptions: {
+        parserOptions: {
+          ecmaFeatures: {
+            jsx: true,
+          },
         },
       },
       output: [
@@ -286,9 +329,11 @@ ruleTester.run("strict-logical-expressions", rule, {
         "<App>{obj?.foo && <Foo/>}</App>",
       ].join("\n"),
       errors: [{ messageId: "conditionErrorFalseyNumber" }],
-      parserOptions: {
-        ecmaFeatures: {
-          jsx: true,
+      languageOptions: {
+        parserOptions: {
+          ecmaFeatures: {
+            jsx: true,
+          },
         },
       },
       output: [

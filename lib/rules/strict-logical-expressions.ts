@@ -1,5 +1,5 @@
 import { ESLintUtils, TSESTree } from "@typescript-eslint/utils"
-import * as tsutils from "tsutils";
+import * as tsutils from "ts-api-utils";
 import * as ts from "typescript";
 import { createRule } from "../util/createRule";
 import { getConstrainedTypeAtLocation } from "../util/types";
@@ -23,7 +23,6 @@ export default createRule<Options, MessageIds>({
   meta: {
     docs: {
       description: "Forbid non-boolean falsey values in inline expressions",
-      recommended: "strict",
     },
     fixable: "code",
     type: "problem",
