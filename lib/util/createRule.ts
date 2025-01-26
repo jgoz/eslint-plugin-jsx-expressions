@@ -6,5 +6,5 @@ const version: string = require("../../package.json").version;
 
 export const createRule = ESLintUtils.RuleCreator(
   (name) =>
-    `https://github.com/hluisson/eslint-plugin-jsx-expressions/blob/v${version}/lib/rules/${name}.md`
+    `https://github.com/jgoz/eslint-plugin-jsx-expressions/blob/v${version}/lib/rules/${name}.md`
 );
